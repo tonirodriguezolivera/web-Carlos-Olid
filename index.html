@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Carlos Olid — Psicólogo</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --accent-yellow: #ffc700;
+            --brand-red: #9b1818;
+            --match-grey: #c4bdc0; 
+            --dark-top: #000000;
+
+            /* --- Photo section: position/size the portrait (fondo.png) ---
+             * Current values below are the preferred positions for phone and laptop.
+             * SIZE: lower % = smaller, higher % = larger. VERTICAL: lower % = higher on screen, higher % = lower.
+             */
+            --lp-photo-width-desktop: 50%;
+            --lp-photo-width-mobile: 79%;
+            --lp-photo-pos-y-desktop: 100%;
+            --lp-photo-pos-y-mobile: 50%;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; 
+            background-color: var(--match-grey);
+        }
+
+        .lp-body {
+            background: linear-gradient(180deg, var(--dark-top) 0%, var(--match-grey) 80%);
+            background-attachment: fixed;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* --- 1. PORTRAIT SECTION --- */
+        .lp-hero {
+            position: relative;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .lp-portrait-wrapper {
+            width: 100%;
+            max-width: 1100px;
+            border: none;
+        }
+
+        .lp-portrait {
+            width: 100%;
+            height: auto;
+            max-height: 80vh; 
+            margin-bottom: 10px;
+            object-fit: contain;
+            display: block;
+            border: none;
+            mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+        }
+
+        /* --- 2. TITLES SECTION --- */
+        .lp-titles-overlay {
+            width: 100%;
+            position: relative;
+            z-index: 200; 
+            margin-top: -180px; 
+            padding: 0 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .lp-title-main {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(60px, 14vw, 110px);
+            color: var(--accent-yellow);
+            margin: 0;
+            line-height: 0.85;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.9);
+        }
+
+        .lp-title-sub {
+            font-size: clamp(16px, 3.8vw, 36px);
+            font-weight: 800;
+            color: #ffffff;
+            text-transform: uppercase;
+            margin: 10px 0;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.9);
+        }
+
+        .lp-hr {
+            width: 70%;
+            max-width: 550px;
+            border: 0; 
+            height: 4px;
+            background-color: var(--accent-yellow);
+            margin: 15px auto 40px auto;
+            display: block;
+        }
+
+        /* --- 3. COMBINED SECTION: full-width arch, photo left (>50%), content right --- */
+        .lp-combined-wrapper {
+            width: 100%;
+            position: relative;
+            z-index: 50;
+            margin: 0 auto;
+            aspect-ratio: 3 / 4;
+            max-height: 88vh;
+            overflow: visible;
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+
+        /* Full-width canvas: bg + photo + arch (arch spans entire width) */
+        .lp-combined-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+        }
+
+        .lp-combined-bg {
+            position: absolute;
+            inset: 0;
+            background: transparent;
+        }
+
+        /* Photo: size and position use variables from :root; no borders */
+        .lp-combined-photo-wrap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: var(--lp-photo-width-desktop);
+            height: 100%;
+            overflow: hidden;
+            border: none;
+            outline: none;
+            box-shadow: none;
+            box-sizing: border-box;
+        }
+
+        .lp-combined-photo {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: left var(--lp-photo-pos-y-desktop);
+            border: none;
+            outline: none;
+            box-shadow: none;
+        }
+
+        /* Arch: full width, curve in bottom ~25% so face stays well above */
+        .lp-arch-overlay {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .lp-arch-overlay svg {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Overlay content: right side, quote right-aligned, icons + button centered */
+        .lp-overlay-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 0 20px;
+            box-sizing: border-box;
+            z-index: 60;
+        }
+
+        .lp-overlay-top {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: flex-start;
+            padding-top: 14%;
+            min-height: 38%;
+        }
+
+        /* Text on right; spacer matches photo width variable */
+        .lp-overlay-left-spacer {
+            flex: 0 0 var(--lp-photo-width-desktop);
+        }
+
+        .lp-overlay-right-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: right;
+        }
+
+        .lp-main-quote {
+            font-family: 'Bebas Neue', cursive;
+            font-size: clamp(18px, 4.2vw, 40px);
+            color: #ffffff; line-height: 1.1; margin: 0;
+            text-transform: uppercase;
+        }
+
+        .lp-follow-text {
+            font-family: 'Bebas Neue', cursive;
+            color: var(--brand-red);
+            font-size: clamp(12px, 2.8vw, 24px); margin: 0;
+        }
+
+        .lp-insta-line {
+            display: flex; align-items: center; justify-content: flex-end; gap: 6px;
+            font-size: clamp(10px, 2.5vw, 16px); font-weight: 700;
+        }
+
+        .lp-overlay-bottom {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            padding-bottom: 56px;
+        }
+
+        .lp-icon-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .lp-icon-item { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            text-align: center; 
+            text-decoration: none;
+            transition: transform 0.2s ease;
+            cursor: pointer;
+            border: none;
+            background: none;
+            font: inherit;
+            color: inherit;
+        }
+        
+        .lp-icon-item:hover { transform: translateY(-5px); }
+
+        .lp-icon-img {
+            width: clamp(60px, 15vw, 85px); 
+            height: clamp(60px, 15vw, 85px);
+            object-fit: contain;
+            margin-bottom: 8px;
+        }
+
+        .lp-icon-label { 
+            font-weight: 800; font-size: clamp(9px, 2vw, 13px); 
+            text-transform: uppercase; color: #000; line-height: 1.1;
+        }
+
+        .lp-btn-gold {
+            background: var(--accent-yellow);
+            color: #000;
+            font-weight: 800;
+            padding: 12px 45px;
+            border-radius: 50px;
+            font-size: 16px;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 50%);
+            z-index: 100;
+            white-space: nowrap;
+        }
+
+        /* --- 5. FOOTER BAR --- (no own background; uses page background) */
+        .lp-footer-bar {
+            width: 100%;
+            height: 80px;
+            background: transparent;
+            z-index: 40;
+        }
+
+        /* =========================================
+           DESKTOP OPTIMIZATIONS (Lower & Closer)
+           ========================================= */
+        @media (min-width: 1024px) {
+            .lp-combined-wrapper {
+                max-width: 1400px;
+                max-height: 85vh;
+            }
+
+            /* Desktop: no borders; contain so top of image is not cut */
+            .lp-combined-photo-wrap {
+                width: var(--lp-photo-width-desktop);
+                border: none;
+                outline: none;
+                box-shadow: none;
+            }
+
+            .lp-combined-photo {
+                object-fit: contain;
+                object-position: left var(--lp-photo-pos-y-desktop);
+                /* Move photo higher: translate up (increase % for more movement) */
+                transform: translateY(-18%);
+                border: none;
+                outline: none;
+                box-shadow: none;
+            }
+
+            .lp-overlay-top {
+                padding-top: 12%;
+            }
+
+            .lp-overlay-left-spacer {
+                flex: 0 0 var(--lp-photo-width-desktop);
+            }
+
+            .lp-icon-grid {
+                max-width: 420px;
+                gap: 24px;
+            }
+
+            .lp-icon-img {
+                width: 110px;
+                height: 110px;
+            }
+
+            .lp-icon-label {
+                font-size: 15px;
+            }
+
+            .lp-overlay-bottom {
+                padding-bottom: 64px;
+            }
+        }
+
+        /* =========================================
+           MOBILE OPTIMIZATIONS
+           ========================================= */
+        @media (max-width: 768px) {
+            .lp-titles-overlay { margin-top: -140px; }
+            .lp-hr { margin-bottom: 12px; }
+            .lp-combined-wrapper {
+                aspect-ratio: 3 / 4;
+                max-height: 82vh;
+                margin-top: -24px;
+            }
+            /* Mobile: use --lp-photo-width-mobile and --lp-photo-pos-y-mobile from :root, no border */
+            .lp-combined-photo-wrap {
+                width: var(--lp-photo-width-mobile);
+                border: none;
+            }
+            .lp-combined-photo {
+                object-fit: contain;
+                object-position: left var(--lp-photo-pos-y-mobile);
+            }
+            /* Quote block lower so it sits at same level as the image (face/chest) */
+            .lp-overlay-top {
+                flex: 1;
+                min-height: 0;
+                padding-top: 40%;
+                padding-bottom: 4%;
+                align-items: center;
+            }
+            .lp-overlay-left-spacer {
+                flex: 0 0 var(--lp-photo-width-mobile);
+            }
+            .lp-overlay-right-text {
+                text-align: center;
+                justify-content: center;
+            }
+            .lp-insta-line {
+                justify-content: center;
+            }
+            .lp-overlay-bottom {
+                padding-bottom: 48px;
+            }
+            .lp-icon-grid {
+                gap: 12px;
+                max-width: 95%;
+            }
+            .lp-portrait { max-height: 55vh; }
+        }
+
+        /* --- MODAL POP-UPS --- */
+        .lp-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .lp-modal-overlay.is-open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .lp-modal {
+            background: linear-gradient(160deg, #1a1a1a 0%, #0d0d0d 100%);
+            border-radius: 16px;
+            max-width: 640px;
+            width: 100%;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06);
+            transform: scale(0.95) translateY(10px);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: hidden;
+        }
+        .lp-modal-overlay.is-open .lp-modal {
+            transform: scale(1) translateY(0);
+        }
+        .lp-modal-header {
+            padding: 28px 32px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            flex-shrink: 0;
+        }
+        .lp-modal-title {
+            font-family: 'Bebas Neue', cursive;
+            font-size: 28px;
+            letter-spacing: 0.08em;
+            color: var(--accent-yellow);
+            margin: 0;
+            text-transform: uppercase;
+        }
+        .lp-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .lp-modal-close:hover {
+            background: rgba(255,255,255,0.15);
+            transform: scale(1.05);
+        }
+        .lp-modal-body {
+            padding: 24px 32px 32px;
+            overflow-y: auto;
+            flex: 1;
+            line-height: 1.75;
+            font-size: 15px;
+            color: rgba(255,255,255,0.9);
+        }
+        .lp-modal-body p {
+            margin: 0 0 1em;
+        }
+        .lp-modal-body p:last-child {
+            margin-bottom: 0;
+        }
+        .lp-modal-body strong { color: #fff; }
+        .lp-modal-cta {
+            margin-top: 24px;
+            font-size: 14px;
+            color: var(--brand-red);
+            font-weight: 700;
+        }
+        .lp-modal-wrap { position: relative; }
+        @media (max-width: 600px) {
+            .lp-modal-header { padding: 24px 24px 16px; }
+            .lp-modal-body { padding: 20px 24px 28px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body class="lp-body">
+
+    <main class="lp-hero">
+        <div class="lp-portrait-wrapper">
+            <img src="images/10.png" alt="Carlos Olid" class="lp-portrait">
+        </div>
+    </main>
+
+    <div class="lp-titles-overlay">
+        <h1 class="lp-title-main">PSICÓLOGO</h1>
+        <p class="lp-title-sub">EXPERTO EN NEURODECISIONES</p>
+        <hr class="lp-hr">
+    </div>
+
+    <section class="lp-combined-wrapper">
+        <div class="lp-combined-canvas">
+                <div class="lp-combined-bg" aria-hidden="true"></div>
+                <div class="lp-combined-photo-wrap">
+                    <img src="images/fondo.png" alt="Carlos Olid" class="lp-combined-photo">
+                </div>
+                <div class="lp-arch-overlay" aria-hidden="true">
+                    <svg viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Full-width arch: curve in lower ~30% so bigger % of image is visible -->
+                        <path d="M 0 100 L 0 80 Q 50 46 100 80 L 100 100 Z" fill="#ffffff"/>
+                    </svg>
+                </div>
+            </div>
+
+        <div class="lp-overlay-content">
+            <div class="lp-overlay-top">
+                <div class="lp-overlay-left-spacer"></div>
+                <div class="lp-overlay-right-text">
+                    <p class="lp-main-quote">“LO MEJOR DE MÍ ES QUE PUEDO SACAR LO MEJOR DE TI “</p>
+                    <p class="lp-follow-text">SÍGUEME Y COMPRUÉBALO</p>
+                    <div class="lp-insta-line">
+                        <i class="fa-brands fa-instagram" style="color:#E1306C"></i>
+                        <span>@carlos.olid</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lp-overlay-bottom">
+                <div class="lp-icon-grid">
+                    <a href="psicologo.html" class="lp-icon-item">
+                        <img src="images/futol.png" alt="Fútbol" class="lp-icon-img">
+                        <div class="lp-icon-label">Fútbol</div>
+                    </a>
+                    <button type="button" class="lp-icon-item lp-modal-trigger" data-modal="psychology" aria-haspopup="dialog">
+                        <img src="images/psychology.png" alt="Psicología" class="lp-icon-img">
+                        <div class="lp-icon-label">PSICOLOGÍA<br><small style="font-size: 0.7em">Emocional</small></div>
+                    </button>
+                    <button type="button" class="lp-icon-item lp-modal-trigger" data-modal="leadership" aria-haspopup="dialog">
+                        <img src="images/leadership.png" alt="Liderazgo" class="lp-icon-img">
+                        <div class="lp-icon-label">LIDERAZGO<br><small style="font-size: 0.7em">en Sist. Complejos</small></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <a href="#about" class="lp-btn-gold">SOBRE MÍ</a>
+    </section>
+
+    <div class="lp-footer-bar"></div>
+
+    <!-- Modal: Emotional Psychology -->
+    <div class="lp-modal-overlay" id="modal-psychology" role="dialog" aria-modal="true" aria-labelledby="modal-psychology-title" aria-hidden="true">
+        <div class="lp-modal">
+            <div class="lp-modal-wrap">
+                <div class="lp-modal-header">
+                    <h2 class="lp-modal-title" id="modal-psychology-title">Emotional Psychology</h2>
+                </div>
+                <div class="lp-modal-body">
+                    <p>We make decisions constantly. Some barely leave a trace. Others, without us realizing it, shape our lives. We choose how to react, what to avoid, what to cling to, when to move forward, and when to stop. And yet, many times something disconcerting happens: we decide one thing and do another.</p>
+                    <p>We know what is good for us, but we don't do it.<br>We promise to change, but we repeat patterns.<br>We choose with our heads and act from somewhere else.</p>
+                    <p>That is not incoherence. It is biology.</p>
+                    <p>Before thought has time to intervene, the body has already decided. The nervous system evaluates whether there is threat or security. Emotions activate memories, learning, and physiological states that condition what we perceive as possible, dangerous, or desirable. Reason comes later, often only to explain what has already happened.</p>
+                    <p>I call this process <strong>Neurodecisions</strong>.</p>
+                    <p>Neurodecisions are automatic choices born from the interaction between emotion and biology. They do not respond to what you want to do, but to what your organism has learned to do to protect itself, adapt, or survive. That is why you can want to change and yet stay where you are. That is why you can desire to move forward and feel blocked.</p>
+                    <p>Over time, some of these automatic responses are consolidated in the brain in a particularly powerful way. Emotional connections are created so deep that they even impose themselves over the cerebral cortex—the part responsible for conscious thought, reflection, and rational decision-making.</p>
+                    <p>We call these connections <strong>Neurox</strong>.</p>
+                    <p>A Neurox is an established neuro-connection that governs your behavior without you realizing it. It acts as an emotional shortcut: it decides fast, without context, without the present. It feeds on fear, prolonged stress, excess dopamine, or cortisol, and it is reinforced every time you repeat the same pattern. The longer it has been active, the harder it is to break through willpower.</p>
+                    <p>That is why understanding what is happening to you is not enough.<br>That is why knowing "what you should do" is not enough.<br>Because you are not fighting against an idea, but against a deeply rooted emotional structure.</p>
+                    <p>Most personal conflicts are born there: in Neurox that condition decisions, relationships, boundaries, self-esteem, and life direction; in a silent distance between what you consciously decide and what your system executes automatically.</p>
+                    <p>My work in emotional psychology focuses precisely on that: identifying, understanding, and deactivating Neurox. Making visible what has been invisible until now. Understanding why your mind goes one way and your behavior another. Accompanying you to rebuild a more conscious relationship between emotion, biology, and decision.</p>
+                    <p>It is not about controlling the mind.<br>It is about ceasing to be governed by it.</p>
+                    <p>When you understand from where you are deciding, something falls into place. Action begins to align with intention. Not because emotions disappear, but because they stop silently taking command.</p>
+                    <p class="lp-modal-cta">If you feel that you make good decisions but act against yourself, if you repeat patterns that you already understand but cannot manage to change, or if you sense there is something deeper conditioning your choices, you can contact me.</p>
+                    <p>Sometimes, true change does not start by making a new decision, but by understanding what Neurox has been deciding for you.</p>
+                </div>
+                <button type="button" class="lp-modal-close" aria-label="Close modal" data-close-modal>&times;</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Leadership in Complex Systems -->
+    <div class="lp-modal-overlay" id="modal-leadership" role="dialog" aria-modal="true" aria-labelledby="modal-leadership-title" aria-hidden="true">
+        <div class="lp-modal">
+            <div class="lp-modal-wrap">
+                <div class="lp-modal-header">
+                    <h2 class="lp-modal-title" id="modal-leadership-title">Leadership in Complex Systems</h2>
+                </div>
+                <div class="lp-modal-body">
+                    <p>For a long time, leadership has been understood as the ability to control variables, anticipate scenarios, and make correct decisions. That approach works when the environment is stable, predictable, and repeatable. It works in complicated systems.</p>
+                    <p>But we do not live in complicated systems.</p>
+                    <p>A complicated system may be difficult, but it is predictable. It has many parts, many rules, and many data points, but if you know the manual, the result is reproducible. An engine, a logistics chain, an algorithm. In these types of systems, Artificial Intelligence is invincible. It processes more information, makes fewer mistakes, and optimizes better than any human being.</p>
+                    <p>A complex system is something else.</p>
+                    <p>In a complex system, variables don't just add up; they interact. They change each other. They affect one another mutually. The behavior of the whole cannot be predicted by analyzing the parts separately. A human team, an organization, a society, or a sports locker room does not react the same way twice to the same situation.</p>
+                    <p>In complex systems, there is no manual.<br>There is context.<br>There is emotion.<br>There is uncertainty.</p>
+                    <p>That is why Artificial Intelligence, although powerful, does not lead complex systems. It can analyze patterns, but it cannot "feel" the system. It does not perceive invisible tensions, emotional climates, shared fears, or internal dynamics that do not appear in the data. And that is where human leadership remains irreplaceable.</p>
+                    <p>A complex system works when "mass intelligence" emerges—when the group begins to think, decide, and adapt better than any individual separately. Not because everyone is brilliant, but because the system is well-organized emotionally and relationally.</p>
+                    <p>Leadership in complex systems does not consist of imposing order, but of creating the conditions for the system to self-organize. It is about achieving a unity that is greater than the sum of its parts—transforming individualities into a living organism capable of adapting, learning, and responding under pressure.</p>
+                    <p>This requires a different type of leadership.<br>You don't lead people like parts.<br>You lead emotions.<br>You lead collective states.<br>You lead situations never faced before.</p>
+                    <p>When the system enters uncertainty, when there are no precedents, when pressure increases and known answers stop working, the leader can no longer lean on past solutions. They have to read the moment, understand the emotional temperature of the group, and decide without guarantees.</p>
+                    <p>This is where many leadership models break down.</p>
+                    <p>My work focuses on accompanying leaders and organizations to understand how complex systems work from the inside—reading invisible dynamics, activating collective intelligence, and sustaining the system when the context changes. Not through control, but through a deep understanding of human behavior in uncertain environments.</p>
+                    <p><strong>Leading a complex system is not about having all the answers.<br>It is knowing how the system responds when nobody has them.</strong></p>
+                    <p class="lp-modal-cta">If you lead people, teams, or organizations and feel that known recipes no longer work, if you face new scenarios for which there is no prior experience, or if you sense the problem is not in the people but in the dynamics of the system, you can contact me.</p>
+                    <p>Because in complex systems, the difference is not made by who is in charge, but by who better understands what is happening.</p>
+                </div>
+                <button type="button" class="lp-modal-close" aria-label="Close modal" data-close-modal>&times;</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            document.querySelectorAll('.lp-modal-trigger').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var id = this.getAttribute('data-modal');
+                    var modal = document.getElementById('modal-' + id);
+                    if (modal) {
+                        modal.classList.add('is-open');
+                        modal.setAttribute('aria-hidden', 'false');
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+            });
+            document.querySelectorAll('[data-close-modal]').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var modal = this.closest('.lp-modal-overlay');
+                    if (modal) {
+                        modal.classList.remove('is-open');
+                        modal.setAttribute('aria-hidden', 'true');
+                        document.body.style.overflow = '';
+                    }
+                });
+            });
+            document.querySelectorAll('.lp-modal-overlay').forEach(function(overlay) {
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === overlay) {
+                        overlay.classList.remove('is-open');
+                        overlay.setAttribute('aria-hidden', 'true');
+                        document.body.style.overflow = '';
+                    }
+                });
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    var open = document.querySelector('.lp-modal-overlay.is-open');
+                    if (open) {
+                        open.classList.remove('is-open');
+                        open.setAttribute('aria-hidden', 'true');
+                        document.body.style.overflow = '';
+                    }
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

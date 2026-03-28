@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Carlos Olid — Hakea tu fútbol</title>
+    <meta name="description" content="Entrenador de fútbol, psicólogo deportivo, neurodecisiones.">
+
+    <!-- Font preloads removed - font files not found. CSS fallbacks will be used. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <!-- Site header -->
+    <header class="site-header" id="top">
+      <div class="container header-inner">
+        <nav class="site-nav" aria-label="Primary">
+          <ul>
+            <li><a href="#about">Sobre mí</a></li>
+            <li><a href="#news">Noticias</a></li>
+            <li><a href="#talks">Conferencias</a></li>
+            <li><a href="#contact">Contacto</a></li>
+            <li><a href="#media">Media</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <button class="lang-btn" title="Español" aria-label="Cambiar idioma (ES)">
+            <img src="https://flagcdn.com/w40/es.png" alt="España" class="flag-icon" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <svg class="flag-icon" viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+              <!-- Red stripe top -->
+              <rect y="0" width="60" height="8" fill="#AA151B"/>
+              <!-- Yellow stripe middle (wider) -->
+              <rect y="8" width="60" height="24" fill="#F1BF00"/>
+              <!-- Red stripe bottom -->
+              <rect y="32" width="60" height="8" fill="#AA151B"/>
+              <!-- Simplified coat of arms on left side -->
+              <g transform="translate(8, 12)">
+                <rect x="0" y="0" width="12" height="8" fill="#AA151B" rx="1"/>
+                <circle cx="6" cy="4" r="2.5" fill="#F1BF00"/>
+                <rect x="4" y="2" width="4" height="4" fill="#AA151B"/>
+              </g>
+            </svg>
+          </button>
+          <button class="scroll-down" id="scrollDown" title="Bajar" aria-label="Bajar a la siguiente sección">
+            <i class="fa-solid fa-chevron-down"></i>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <button class="burger" id="burger" aria-expanded="false" aria-controls="mobileMenu" aria-label="Abrir menú">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+
+      <nav id="mobileMenu" class="mobile-nav" aria-label="Mobile">
+        <ul>
+          <li><a href="#about">Sobre mí</a></li>
+          <li><a href="#news">Noticias</a></li>
+          <li><a href="#talks">Conferencias</a></li>
+          <li><a href="#contact">Contacto</a></li>
+          <li><a href="#media">Media</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="hero" aria-label="Hakea tu fútbol">
+      <div class="hero-bg">
+        <img src="images/9.png" alt="Jugador besando el balón" class="hero-photo">
+      </div>
+      
+      <div class="container hero-inner">
+        <!-- If you have a transparent PNG of the title lettering, swap the span below for an <img> and give it class 'hero-title-img'. -->
+        <span class="hero-title">HAKEA TU FÚTBOL</span>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section about" id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-left">
+            <h2 class="about-title about-title-overlay" id="aboutMeBtn">Sobre mí</h2>
+          </div>
+            <div class="co-logo-wrapper">
+              <img src="images/8.png" alt="CO Logo" class="co-logo">
+          </div>
+          <div class="about-right">
+            <h2 class="about-title">Descarga <br>Mi currículum</h2>
+            <a class="download-btn" href="#" onclick="downloadFile('docs/CV Carlos Olid.pdf', 'CV_Carlos_Olid.pdf'); return false;">
+              <i class="fa-solid fa-download"></i>
+              <span>DOWNLOAD</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECT DOWNLOAD -->
+    <section class="section project-download" id="project">
+      <div class="container">
+        <div class="project-grid">
+          <div class="project-left">
+            <div class="project-download-item project-download-item-centered">
+              <h2 class="project-title">Descarga</h2>
+              <h2 class="project-title">Mi proyecto</h2>
+              <a class="download-btn" href="#" onclick="downloadFile('docs/Proyecto.pdf', 'Proyecto.pdf'); return false;">
+                <i class="fa-solid fa-download"></i>
+                <span>DOWNLOAD</span>
+              </a>
+            </div>
+            <div class="project-download-item project-download-item-centered">
+              <h2 class="project-title">Tesis</h2>
+              <h2 class="project-title">temperatura emocional</h2>
+              <a class="download-btn" href="#" onclick="downloadFile('docs/Tesis_Temperatura_Emocional.pdf', 'Tesis_Temperatura_Emocional.pdf'); return false;">
+                <i class="fa-solid fa-download"></i>
+                <span>DOWNLOAD</span>
+              </a>
+            </div>
+          </div>
+          <div class="project-right">
+            <img src="images/11.png" alt="Project" class="project-image">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUALIFICATIONS -->
+    <section class="section qualifications" id="qualifications">
+      <div class="container">
+        <div class="qualifications-grid">
+          <div class="qualifications-left">
+            <div class="qual-block">
+              <h3 class="qual-title">ENTRENADOR DE FÚTBOL</h3>
+              <h3 class="qual-title">UEFA PRO</h3>
+            </div>
+            <div class="qual-divider"></div>
+            <div class="qual-block">
+              <h3 class="qual-title">PSICÓLOGO DEPORTIVO</h3>
+              <h3 class="qual-title">EXPERTO EN NEURODECISIONES</h3>
+            </div>
+            <div class="qual-divider"></div>
+            <div class="qual-block qual-highlight">
+              <h3 class="qual-title">CREADOR DE METODOLOGÍA</h3>
+              <h3 class="qual-title">SISTEMA DE PUERTAS</h3>
+            </div>
+            <div class="qual-divider"></div>
+            <div class="qual-block qual-highlight">
+              <h3 class="qual-title">EXPERTO EN LIDERAZGO</h3>
+              <h3 class="qual-title">EN SISTEMAS COMPLEJOS</h3>
+            </div>
+          </div>
+          <div class="qualifications-right">
+            <img src="images/2.png" alt="Qualifications" class="qualifications-image">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT ME -->
+    <section class="section contact-me" id="contact-me">
+      <div class="container">
+        <div class="contact-me-grid">
+          <div class="contact-me-left">
+            <h2 class="contact-me-title">CONTÁCTAME</h2>
+            <a href="https://wa.me/34619320008" target="_blank" rel="noopener noreferrer" class="whatsapp-button">
+              <img src="images/N5.png" alt="WhatsApp" class="contact-me-icon">
+            </a>
+          </div>
+          <div class="contact-me-right">
+            <img src="images/1.png" alt="Portrait" class="contact-me-image">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWS -->
+    <section class="section news" id="news">
+      <div class="container">
+        <h2 class="news-title">NOTICIAS</h2>
+        <div class="card-row">
+          <article class="card">
+            <img src="images/4.png" alt="Noticia 1">
+            <a href="https://www.elconfidencialdigital.com/articulo/an/carlos-olid-entrenador-psicologo-que-mide-temperatura-emocional-partidos/20250826231207977783.html" target="_blank" rel="noopener noreferrer">
+              <img src="images/N2.png" alt="News overlay" class="news-overlay-img">
+            </a>
+            
+          </article>
+          <article class="card">
+            <img src="images/6.png" alt="Noticia 2">
+            <a href="https://actualidad-abc.com/el-espanol-carlos-olid-psicologo-y-entrenador-asesorara-a-la-seleccion-haitiana-sub-17-en-el-mundial/" target="_blank" rel="noopener noreferrer">
+              <img src="images/N2.png" alt="News overlay" class="news-overlay-img">
+            </a>
+            
+          </article>
+          <article class="card">
+            <img src="images/5.png" alt="Noticia 3">
+            <a href="https://www.periodistadigital.com/notas-empresa/?notaid=sistema-de-puertas-la-metodologia-que-ha-llevado-al-entrenador-carlos-olid-a-trabajar-en-el-alto-rendimiento-7495" target="_blank" rel="noopener noreferrer">
+              <img src="images/N2.png" alt="News overlay" class="news-overlay-img">
+            </a>
+           
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TALKS -->
+    <section class="section talks" id="talks" aria-label="Conferencias">
+      <div class="container">
+        <h2 class="talks-title">CONFERENCIAS</h2>
+        <div class="talks-grid">
+          <div class="talks-left">
+            <div class="talk-block">
+              <img src="images/2.png" alt="" class="talk-icon">
+              <div class="talk-content">
+                <h3>Neurodecisiones en el fútbol</h3>
+                <p>Impartida en fcf</p>
+              </div>
+            </div>
+            <div class="talk-block">
+              <img src="images/2.png" alt="" class="talk-icon">
+              <div class="talk-content">
+                <h3>Organización en el caos</h3>
+                <p>Sistema de puertas</p>
+                <p>Impartida en fcf</p>
+              </div>
+            </div>
+          </div>
+          <div class="talks-right">
+            <div class="talk-block">
+              <img src="images/N1.png" alt="" class="talk-icon">
+              <div class="talk-content">
+                <h3>Biomarcadores en el fútbol</h3>
+              </div>
+            </div>
+            <div class="talk-block">
+              <img src="images/N1.png" alt="" class="talk-icon">
+              <div class="talk-content">
+                <h3>Liderar un sistema complejo</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PODCAST & BLOG -->
+    <section class="section podcast-blog" id="podcast-blog">
+      <div class="container">
+        <h2 class="podcast-blog-title">Hakea tu fútbol</h2>
+        <div class="podcast-blog-images">
+          <img src="images/spotfypodcast.PNG" alt="Spotify Podcast" class="podcast-blog-img">
+          <img src="images/blog.PNG" alt="Blog" class="podcast-blog-img">
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <!-- <section class="section contact" id="contact">
+      <div class="container contact-inner">
+        <h2 class="contact-title">Hakea tu fútbol</h2>
+        <div class="contact-graphics">
+          <img src="images/N3.png" alt="" class="contact-image">
+          <div class="contact-center">
+            <a href="blog/" class="envelope-link" aria-label="Ir al blog">
+              <img src="images/N6.png" alt="Blog" class="contact-image">
+            </a>
+            <span class="blog-text">BLOG</span>
+          </div>
+          <img src="images/N3.png" alt="" class="contact-image">
+        </div>
+      </div>
+    </section> -->
+
+    <!-- MEDIA -->
+    <section class="section media" id="media">
+      <div class="container">
+        <h2 class="media-title">MEDIA</h2>
+        <table class="social-table">
+          <tr>
+            <td class="social-icon-cell">
+              <i class="fa-brands fa-instagram social-icon"></i>
+            </td>
+            <td class="social-text-cell">
+              <a href="#" target="_blank" rel="noopener">@carlos.olid</a>
+            </td>
+          </tr>
+          <tr>
+            <td class="social-icon-cell">
+              <i class="fa-brands fa-instagram social-icon"></i>
+            </td>
+            <td class="social-text-cell">
+              <a href="#" target="_blank" rel="noopener">@carlos.olid.futbol</a>
+            </td>
+          </tr>
+          <tr>
+            <td class="social-icon-cell">
+              <i class="fa-brands fa-linkedin social-icon"></i>
+            </td>
+            <td class="social-text-cell">
+              <a href="#" target="_blank" rel="noopener">Carlos Olid</a>
+            </td>
+          </tr>
+          <tr class="social-twitter">
+            <td class="social-icon-cell">
+              <i class="fa-brands fa-x-twitter social-icon"></i>
+            </td>
+            <td class="social-text-cell">
+              <a href="#" target="_blank" rel="noopener">CarlosOlid_</a>
+            </td>
+          </tr>
+          <tr class="social-email">
+            <td class="social-icon-cell">
+              <i class="fa-solid fa-envelope social-icon"></i>
+            </td>
+            <td class="social-text-cell">
+              <a href="mailto:info@carlosolid.com">info@carlosolid.com</a>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- PATROCINADORES -->
+    <section class="section patrocinadores" id="patrocinadores">
+      <div class="container">
+        <h2 class="patrocinadores-title">Patrocinadores</h2>
+        <div class="patrocinadores-images">
+          <img src="images/dnc.png" alt="DNC" class="patrocinadores-img">
+          <img src="images/grouphm.png" alt="Fondation Groupe HM" class="patrocinadores-img">
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="container">
+        <small>© <span id="year"></span> Carlos Olid</small>
+      </div>
+    </footer>
+
+    <!-- About Me Modal -->
+    <div id="aboutModal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close" id="closeModal">&times;</span>
+        <h2 class="modal-title">Carlos Olid</h2>
+        <p class="modal-subtitle">Sabadell, 4 de enero de 1983</p>
+        <div class="modal-body">
+          <p>Carlos Olid (Sabadell, 4 de enero de 1983) es entrenador de fútbol con titulación UEFA Pro, psicólogo deportivo y experto en liderazgo en sistemas complejos.</p>
+          
+          <p>Formado en una familia profundamente futbolera, desarrolló desde joven una mirada analítica, creativa e inconformista que ha marcado su trayectoria profesional. Su trabajo se caracteriza por integrar análisis del juego, psicología del rendimiento y neurociencia aplicada, entendiendo el fútbol como un sistema vivo donde cada decisión, emoción e interacción altera el comportamiento colectivo.</p>
+          
+          <p>A lo largo de su carrera ha construido un enfoque propio que combina táctica, ciencia y gestión emocional. Entre sus aportaciones destaca el <strong>Sistema de Puertas</strong>, una metodología que propone una nueva manera de interpretar el espacio, la anticipación y las relaciones dentro del juego, ofreciendo un marco más inteligente y adaptable para la toma de decisiones. Asimismo, es autor de la <strong>Teoría de la Temperatura Emocional en el Fútbol</strong>, un modelo que analiza cómo las emociones influyen en la claridad mental y en el rendimiento real de jugadores y equipos, aportando una herramienta práctica para regular la activación y entender las derivas emocionales durante la competición.</p>
+          
+          <p>Ha trabajado con clubes, academias y selecciones nacionales, participando en proyectos de alto rendimiento, desarrollo metodológico y formación avanzada. Su especialización abarca la lectura estructural del juego, la regulación emocional bajo presión, la toma de decisiones en entornos complejos y el liderazgo aplicado al deporte profesional. Desde esta perspectiva multidisciplinar, ayuda a deportistas, entrenadores y organizaciones a pensar mejor, decidir mejor y rendir mejor en escenarios donde la exigencia, la incertidumbre y la complejidad son constantes.</p>
+          
+          <p>Con un enfoque sólido, riguroso y adaptado al fútbol moderno, Carlos Olid se ha consolidado como una referencia en el estudio del rendimiento emocional, la interpretación del juego y el liderazgo en sistemas complejos, integrando ciencia, psicología y metodología para mejorar la estructura y el comportamiento de equipos y jugadores.</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="scripts.js"></script>
+  </body>
+  </html>
+
+
