@@ -1,4 +1,4 @@
 # webco
 
-Personal portfolio website for Carlos Olid.
+Sitio web de portafolio personal de Carlos Olid.
 
