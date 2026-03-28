@@ -15,9 +15,9 @@
             --match-grey: #c4bdc0; 
             --dark-top: #000000;
 
-            /* --- Photo section: position/size the portrait (fondo.png) ---
-             * Current values below are the preferred positions for phone and laptop.
-             * SIZE: lower % = smaller, higher % = larger. VERTICAL: lower % = higher on screen, higher % = lower.
+            /* --- Sección de foto: posición/tamaño del retrato (fondo.png) ---
+             * Los valores de abajo son las posiciones preferidas para móvil y portátil.
+             * TAMAÑO: menor % = más pequeño, mayor % = más grande. VERTICAL: menor % = más arriba en pantalla, mayor % = más abajo.
              */
             --lp-photo-width-desktop: 50%;
             --lp-photo-width-mobile: 79%;
@@ -42,7 +42,7 @@
             font-family: 'Inter', sans-serif;
         }
 
-        /* --- 1. PORTRAIT SECTION --- */
+        /* --- 1. SECCIÓN DEL RETRATO --- */
         .lp-hero {
             position: relative;
             width: 100%;
@@ -70,7 +70,7 @@
             -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
         }
 
-        /* --- 2. TITLES SECTION --- */
+        /* --- 2. SECCIÓN DE TÍTULOS --- */
         .lp-titles-overlay {
             width: 100%;
             position: relative;
@@ -109,7 +109,7 @@
             display: block;
         }
 
-        /* --- 3. COMBINED SECTION: full-width arch, photo left (>50%), content right --- */
+        /* --- 3. SECCIÓN COMBINADA: arco a ancho completo, foto a la izquierda (>50%), contenido a la derecha --- */
         .lp-combined-wrapper {
             width: 100%;
             position: relative;
@@ -123,7 +123,7 @@
             box-shadow: none;
         }
 
-        /* Full-width canvas: bg + photo + arch (arch spans entire width) */
+        /* Lienzo a ancho completo: fondo + foto + arco (el arco ocupa todo el ancho) */
         .lp-combined-canvas {
             position: absolute;
             inset: 0;
@@ -138,7 +138,7 @@
             background: transparent;
         }
 
-        /* Photo: size and position use variables from :root; no borders */
+        /* Foto: tamaño y posición usando variables de :root; sin bordes */
         .lp-combined-photo-wrap {
             position: absolute;
             top: 0;
@@ -164,15 +164,16 @@
             box-shadow: none;
         }
 
-        /* Arch: full width, curve in bottom ~25% so face stays well above */
+        /* Arco: ancho completo, curva en el 25% inferior para que el rostro quede por encima */
         .lp-arch-overlay {
-            position: absolute;
+            position: fixed;
             left: 0;
             right: 0;
             bottom: 0;
             width: 100%;
-            height: 100%;
+            height: min(60vh, 560px);
             pointer-events: none;
+            z-index: 5;
         }
 
         .lp-arch-overlay svg {
@@ -184,7 +185,7 @@
             display: block;
         }
 
-        /* Overlay content: right side, quote right-aligned, icons + button centered */
+        /* Contenido superpuesto: lado derecho, cita alineada a la derecha, iconos + botón centrados */
         .lp-overlay-content {
             position: absolute;
             top: 0;
@@ -206,7 +207,7 @@
             min-height: 38%;
         }
 
-        /* Text on right; spacer matches photo width variable */
+        /* Texto a la derecha; el espaciador coincide con el ancho de la foto */
         .lp-overlay-left-spacer {
             flex: 0 0 var(--lp-photo-width-desktop);
         }
@@ -266,9 +267,29 @@
             background: none;
             font: inherit;
             color: inherit;
+            position: relative;
         }
         
         .lp-icon-item:hover { transform: translateY(-5px); }
+
+        /* Fondo negro exclusivo para el icono de liderazgo (circular, sin parche visible) */
+        .lp-icon-item--leadership::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: clamp(38px, 9.8vw, 56px);
+            height: clamp(38px, 9.8vw, 56px);
+            border-radius: 50%;
+            background: #000;
+            z-index: 0;
+        }
+
+        .lp-icon-item--leadership .lp-icon-img {
+            position: relative;
+            z-index: 1;
+        }
 
         .lp-icon-img {
             width: clamp(60px, 15vw, 85px); 
@@ -287,6 +308,9 @@
             color: #000;
             font-weight: 800;
             padding: 12px 45px;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
             border-radius: 50px;
             font-size: 16px;
             text-transform: uppercase;
@@ -301,7 +325,7 @@
             white-space: nowrap;
         }
 
-        /* --- 5. FOOTER BAR --- (no own background; uses page background) */
+        /* --- 5. BARRA DE PIE --- (sin fondo propio; usa el fondo de la página) */
         .lp-footer-bar {
             width: 100%;
             height: 80px;
@@ -310,7 +334,7 @@
         }
 
         /* =========================================
-           DESKTOP OPTIMIZATIONS (Lower & Closer)
+           OPTIMIZACIONES DE ESCRITORIO (Más abajo y más cerca)
            ========================================= */
         @media (min-width: 1024px) {
             .lp-combined-wrapper {
@@ -318,7 +342,7 @@
                 max-height: 85vh;
             }
 
-            /* Desktop: no borders; contain so top of image is not cut */
+            /* Escritorio: sin bordes; contain para no recortar la parte superior de la imagen */
             .lp-combined-photo-wrap {
                 width: var(--lp-photo-width-desktop);
                 border: none;
@@ -329,7 +353,7 @@
             .lp-combined-photo {
                 object-fit: contain;
                 object-position: left var(--lp-photo-pos-y-desktop);
-                /* Move photo higher: translate up (increase % for more movement) */
+                /* Mover la foto más arriba: translateY negativo (aumenta % para más desplazamiento) */
                 transform: translateY(-18%);
                 border: none;
                 outline: none;
@@ -354,6 +378,12 @@
                 height: 110px;
             }
 
+            .lp-icon-item--leadership::before {
+                top: 11px;
+                width: 74px;
+                height: 74px;
+            }
+
             .lp-icon-label {
                 font-size: 15px;
             }
@@ -364,7 +394,7 @@
         }
 
         /* =========================================
-           MOBILE OPTIMIZATIONS
+           OPTIMIZACIONES MÓVIL
            ========================================= */
         @media (max-width: 768px) {
             .lp-titles-overlay { margin-top: -140px; }
@@ -374,7 +404,7 @@
                 max-height: 82vh;
                 margin-top: -24px;
             }
-            /* Mobile: use --lp-photo-width-mobile and --lp-photo-pos-y-mobile from :root, no border */
+            /* Móvil: usar --lp-photo-width-mobile y --lp-photo-pos-y-mobile desde :root, sin borde */
             .lp-combined-photo-wrap {
                 width: var(--lp-photo-width-mobile);
                 border: none;
@@ -383,7 +413,7 @@
                 object-fit: contain;
                 object-position: left var(--lp-photo-pos-y-mobile);
             }
-            /* Quote block lower so it sits at same level as the image (face/chest) */
+            /* Bloque de cita más abajo para quedar al mismo nivel que la imagen (cara/pecho) */
             .lp-overlay-top {
                 flex: 1;
                 min-height: 0;
@@ -411,7 +441,7 @@
             .lp-portrait { max-height: 55vh; }
         }
 
-        /* --- MODAL POP-UPS --- */
+        /* --- VENTANAS MODALES --- */
         .lp-modal-overlay {
             position: fixed;
             inset: 0;
@@ -437,9 +467,10 @@
             border-radius: 16px;
             max-width: 640px;
             width: 100%;
-            max-height: 85vh;
+            max-height: min(85vh, 900px);
             display: flex;
             flex-direction: column;
+            min-height: 0;
             box-shadow: 0 25px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06);
             transform: scale(0.95) translateY(10px);
             transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -486,9 +517,26 @@
             padding: 24px 32px 32px;
             overflow-y: auto;
             flex: 1;
+            min-height: 0;
+            scrollbar-gutter: stable;
+            -webkit-overflow-scrolling: touch;
             line-height: 1.75;
             font-size: 15px;
             color: rgba(255,255,255,0.9);
+        }
+        .lp-modal-body::-webkit-scrollbar {
+            width: 10px;
+        }
+        .lp-modal-body::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.08);
+            border-radius: 999px;
+        }
+        .lp-modal-body::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.35);
+            border-radius: 999px;
+        }
+        .lp-modal-body::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.5);
         }
         .lp-modal-body p {
             margin: 0 0 1em;
@@ -503,7 +551,14 @@
             color: var(--brand-red);
             font-weight: 700;
         }
-        .lp-modal-wrap { position: relative; }
+        .lp-modal-wrap {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-height: 0;
+            max-height: 100%;
+        }
         @media (max-width: 600px) {
             .lp-modal-header { padding: 24px 24px 16px; }
             .lp-modal-body { padding: 20px 24px 28px; font-size: 14px; }
@@ -528,11 +583,11 @@
         <div class="lp-combined-canvas">
                 <div class="lp-combined-bg" aria-hidden="true"></div>
                 <div class="lp-combined-photo-wrap">
-                    <img src="images/fondo.png" alt="Carlos Olid" class="lp-combined-photo">
+                    <!-- <img src="images/fondo.png" alt="Carlos Olid" class="lp-combined-photo"> -->
                 </div>
                 <div class="lp-arch-overlay" aria-hidden="true">
                     <svg viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Full-width arch: curve in lower ~30% so bigger % of image is visible -->
+                        <!-- Arco de ancho completo: curva en el 30% inferior para mostrar más imagen -->
                         <path d="M 0 100 L 0 80 Q 50 46 100 80 L 100 100 Z" fill="#ffffff"/>
                     </svg>
                 </div>
@@ -561,7 +616,7 @@
                         <img src="images/psychology.png" alt="Psicología" class="lp-icon-img">
                         <div class="lp-icon-label">PSICOLOGÍA<br><small style="font-size: 0.7em">Emocional</small></div>
                     </button>
-                    <button type="button" class="lp-icon-item lp-modal-trigger" data-modal="leadership" aria-haspopup="dialog">
+                    <button type="button" class="lp-icon-item lp-modal-trigger lp-icon-item--leadership" data-modal="leadership" aria-haspopup="dialog">
                         <img src="images/leadership.png" alt="Liderazgo" class="lp-icon-img">
                         <div class="lp-icon-label">LIDERAZGO<br><small style="font-size: 0.7em">en Sist. Complejos</small></div>
                     </button>
@@ -569,67 +624,93 @@
             </div>
         </div>
 
-        <a href="#about" class="lp-btn-gold">SOBRE MÍ</a>
+        <button type="button" class="lp-btn-gold lp-modal-trigger" data-modal="about" aria-haspopup="dialog">SOBRE MÍ</button>
     </section>
 
     <div class="lp-footer-bar"></div>
 
-    <!-- Modal: Emotional Psychology -->
-    <div class="lp-modal-overlay" id="modal-psychology" role="dialog" aria-modal="true" aria-labelledby="modal-psychology-title" aria-hidden="true">
+    <!-- Modal: Psicología emocional -->
+    <div class="lp-modal-overlay" id="modal-about" role="dialog" aria-modal="true" aria-labelledby="modal-about-title" aria-hidden="true">
         <div class="lp-modal">
             <div class="lp-modal-wrap">
                 <div class="lp-modal-header">
-                    <h2 class="lp-modal-title" id="modal-psychology-title">Emotional Psychology</h2>
+                    <h2 class="lp-modal-title" id="modal-about-title">Sobre mí</h2>
                 </div>
                 <div class="lp-modal-body">
-                    <p>We make decisions constantly. Some barely leave a trace. Others, without us realizing it, shape our lives. We choose how to react, what to avoid, what to cling to, when to move forward, and when to stop. And yet, many times something disconcerting happens: we decide one thing and do another.</p>
-                    <p>We know what is good for us, but we don't do it.<br>We promise to change, but we repeat patterns.<br>We choose with our heads and act from somewhere else.</p>
-                    <p>That is not incoherence. It is biology.</p>
-                    <p>Before thought has time to intervene, the body has already decided. The nervous system evaluates whether there is threat or security. Emotions activate memories, learning, and physiological states that condition what we perceive as possible, dangerous, or desirable. Reason comes later, often only to explain what has already happened.</p>
-                    <p>I call this process <strong>Neurodecisions</strong>.</p>
-                    <p>Neurodecisions are automatic choices born from the interaction between emotion and biology. They do not respond to what you want to do, but to what your organism has learned to do to protect itself, adapt, or survive. That is why you can want to change and yet stay where you are. That is why you can desire to move forward and feel blocked.</p>
-                    <p>Over time, some of these automatic responses are consolidated in the brain in a particularly powerful way. Emotional connections are created so deep that they even impose themselves over the cerebral cortex—the part responsible for conscious thought, reflection, and rational decision-making.</p>
-                    <p>We call these connections <strong>Neurox</strong>.</p>
-                    <p>A Neurox is an established neuro-connection that governs your behavior without you realizing it. It acts as an emotional shortcut: it decides fast, without context, without the present. It feeds on fear, prolonged stress, excess dopamine, or cortisol, and it is reinforced every time you repeat the same pattern. The longer it has been active, the harder it is to break through willpower.</p>
-                    <p>That is why understanding what is happening to you is not enough.<br>That is why knowing "what you should do" is not enough.<br>Because you are not fighting against an idea, but against a deeply rooted emotional structure.</p>
-                    <p>Most personal conflicts are born there: in Neurox that condition decisions, relationships, boundaries, self-esteem, and life direction; in a silent distance between what you consciously decide and what your system executes automatically.</p>
-                    <p>My work in emotional psychology focuses precisely on that: identifying, understanding, and deactivating Neurox. Making visible what has been invisible until now. Understanding why your mind goes one way and your behavior another. Accompanying you to rebuild a more conscious relationship between emotion, biology, and decision.</p>
-                    <p>It is not about controlling the mind.<br>It is about ceasing to be governed by it.</p>
-                    <p>When you understand from where you are deciding, something falls into place. Action begins to align with intention. Not because emotions disappear, but because they stop silently taking command.</p>
-                    <p class="lp-modal-cta">If you feel that you make good decisions but act against yourself, if you repeat patterns that you already understand but cannot manage to change, or if you sense there is something deeper conditioning your choices, you can contact me.</p>
-                    <p>Sometimes, true change does not start by making a new decision, but by understanding what Neurox has been deciding for you.</p>
+                    <p>Carlos Olid (Sabadell, 4 de enero de 1983) es psicólogo, pensador del comportamiento humano y conferenciante especializado en neurodecisiones aplicadas al rendimiento y al liderazgo en sistemas complejos. Carlos Olid desarrolla su trabajo investigando cómo las emociones, la biología y el contexto influyen en la forma en que las personas toman decisiones en entornos de alta presión.</p>
+                    <p>Desde sus inicios profesionales, Carlos Olid ha explorado una idea central: las decisiones humanas no son únicamente racionales, sino el resultado de la interacción entre emoción, biología, experiencia y entorno. Esta visión le ha llevado a desarrollar un enfoque propio que conecta la psicología emocional, el pensamiento sistémico y el análisis del comportamiento en contextos de alta exigencia.</p>
+                    <p>El trabajo de Carlos Olid se articula alrededor de tres ámbitos que forman la base de su investigación y práctica profesional: la psicología emocional como arquitectura interna del comportamiento humano, el liderazgo en sistemas complejos como marco para comprender cómo interactúan las personas dentro de entornos dinámicos e impredecibles, y el fútbol como escenario privilegiado para observar la toma de decisiones en tiempo real bajo condiciones de presión competitiva.</p>
+                    <p>A lo largo de su trayectoria, Carlos Olid ha trabajado con futbolistas profesionales, entrenadores y organizaciones deportivas, aplicando la psicología del rendimiento y el análisis de la toma de decisiones para optimizar el rendimiento individual y colectivo. Paralelamente, su experiencia se ha extendido a otros entornos de alta exposición pública, donde Carlos Olid ha acompañado a empresarios, actores, modelos, cantantes y figuras del ámbito político en procesos de gestión emocional, toma de decisiones y desarrollo del rendimiento personal.</p>
+                    <p>Una parte esencial de su investigación se centra en el estudio de la inteligencia de masas y las decisiones colectivas, analizando cómo los grupos humanos generan dinámicas emocionales compartidas que influyen en la conducta individual. Desde esta perspectiva, Carlos Olid examina cómo la interacción entre individuos dentro de sistemas complejos puede amplificar comportamientos, alterar percepciones de riesgo y modificar procesos de toma de decisiones tanto en equipos como en organizaciones.</p>
+                    <p>El núcleo del trabajo de Carlos Olid se encuentra en el estudio de las neurodecisiones, analizando cómo factores biológicos y emocionales -como el estrés, la dopamina o el cortisol- influyen en el comportamiento humano y en la calidad de las decisiones bajo presión. En este marco, ha desarrollado el concepto de Neurox, término que define aquellas neuroconexiones cerebrales tóxicas que alcanzan tal nivel de consolidación que pueden imponerse al córtex cerebral y condicionar la conducta y la toma de decisiones del individuo.</p>
+                    <p>Para Carlos Olid, el fútbol no es únicamente un deporte, sino uno de los sistemas complejos más claros para observar la conducta humana: un entorno donde el tiempo es limitado, la presión emocional es alta y cada decisión puede alterar el equilibrio del sistema.</p>
+                    <p>Según Carlos Olid, comprender cómo decidimos es el primer paso para cambiar cómo vivimos. Su labor combina pensamiento, divulgación y experiencia aplicada para ayudar a personas y organizaciones a optimizar su rendimiento en contextos complejos.</p>
+                    <p>Además de su labor profesional, desarrolla proyectos de investigación, divulgación y formación orientados al análisis del comportamiento humano y el liderazgo. Es autor del libro Esencial, un manual de herramientas sociales y emocionales diseñado para mejorar la toma de decisiones y comprender los mecanismos que influyen en el comportamiento humano.</p>
+                    <p>Su obra gira en torno a una idea fundamental:</p>
+                    <p><strong>solo quien comprende cómo decide puede empezar a decidir quién quiere ser.</strong></p>
+                    <p>- Carlos Olid<br>Pensador del comportamiento humano</p>
                 </div>
-                <button type="button" class="lp-modal-close" aria-label="Close modal" data-close-modal>&times;</button>
+                <button type="button" class="lp-modal-close" aria-label="Cerrar modal" data-close-modal>&times;</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal: Leadership in Complex Systems -->
+    <!-- Modal: Psicología emocional -->
+    <div class="lp-modal-overlay" id="modal-psychology" role="dialog" aria-modal="true" aria-labelledby="modal-psychology-title" aria-hidden="true">
+        <div class="lp-modal">
+            <div class="lp-modal-wrap">
+                <div class="lp-modal-header">
+                    <h2 class="lp-modal-title" id="modal-psychology-title">Psicología emocional</h2>
+                </div>
+                <div class="lp-modal-body">
+                    <p>Tomamos decisiones constantemente. Algunas apenas dejan rastro. Otras, sin que nos demos cuenta, moldean nuestra vida. Elegimos cómo reaccionar, qué evitar, a qué aferrarnos, cuándo avanzar y cuándo frenar. Y, sin embargo, muchas veces sucede algo desconcertante: decidimos una cosa y hacemos otra.</p>
+                    <p>Sabemos lo que nos conviene, pero no lo hacemos.<br>Prometemos cambiar, pero repetimos patrones.<br>Elegimos con la cabeza y actuamos desde otro lugar.</p>
+                    <p>Eso no es incoherencia. Es biología.</p>
+                    <p>Antes de que el pensamiento tenga tiempo de intervenir, el cuerpo ya ha decidido. El sistema nervioso evalúa si hay amenaza o seguridad. Las emociones activan memorias, aprendizajes y estados fisiológicos que condicionan lo que percibimos como posible, peligroso o deseable. La razón llega después, muchas veces solo para explicar lo que ya ocurrió.</p>
+                    <p>I call this process <strong>Neurodecisions</strong>.</p>
+                    <p>Las Neurodecisiones son elecciones automáticas nacidas de la interacción entre emoción y biología. No responden a lo que quieres hacer, sino a lo que tu organismo ha aprendido a hacer para protegerse, adaptarse o sobrevivir. Por eso puedes querer cambiar y, aun así, quedarte donde estás. Por eso puedes desear avanzar y sentirte bloqueado.</p>
+                    <p>Con el tiempo, algunas de estas respuestas automáticas se consolidan en el cerebro de forma especialmente potente. Se crean conexiones emocionales tan profundas que incluso se imponen sobre la corteza cerebral, la parte responsable del pensamiento consciente, la reflexión y la toma racional de decisiones.</p>
+                    <p>We call these connections <strong>Neurox</strong>.</p>
+                    <p>Un Neurox es una neuroconexión establecida que gobierna tu conducta sin que te des cuenta. Funciona como un atajo emocional: decide rápido, sin contexto y sin presente. Se alimenta del miedo, del estrés prolongado, del exceso de dopamina o de cortisol, y se refuerza cada vez que repites el mismo patrón. Cuanto más tiempo lleva activo, más difícil es romperlo solo con voluntad.</p>
+                    <p>Por eso no basta con entender lo que te pasa.<br>Por eso no basta con saber "lo que deberías hacer".<br>Porque no estás luchando contra una idea, sino contra una estructura emocional profundamente arraigada.</p>
+                    <p>La mayoría de los conflictos personales nacen ahí: en Neurox que condicionan decisiones, relaciones, límites, autoestima y dirección de vida; en una distancia silenciosa entre lo que decides conscientemente y lo que tu sistema ejecuta automáticamente.</p>
+                    <p>Mi trabajo en psicología emocional se centra precisamente en eso: identificar, comprender y desactivar Neurox. Hacer visible lo que hasta ahora ha sido invisible. Entender por qué tu mente va por un lado y tu conducta por otro. Acompañarte a reconstruir una relación más consciente entre emoción, biología y decisión.</p>
+                    <p>No se trata de controlar la mente.<br>Se trata de dejar de estar gobernado por ella.</p>
+                    <p>Cuando comprendes desde dónde estás decidiendo, algo encaja. La acción empieza a alinearse con la intención. No porque las emociones desaparezcan, sino porque dejan de tomar el mando en silencio.</p>
+                    <p class="lp-modal-cta">Si sientes que tomas buenas decisiones pero actúas en tu contra, si repites patrones que ya entiendes pero no consigues cambiar, o si percibes que hay algo más profundo condicionando tus elecciones, puedes contactarme.</p>
+                    <p>A veces, el cambio real no empieza tomando una nueva decisión, sino entendiendo qué Neurox ha estado decidiendo por ti.</p>
+                </div>
+                <button type="button" class="lp-modal-close" aria-label="Cerrar modal" data-close-modal>&times;</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Liderazgo en sistemas complejos -->
     <div class="lp-modal-overlay" id="modal-leadership" role="dialog" aria-modal="true" aria-labelledby="modal-leadership-title" aria-hidden="true">
         <div class="lp-modal">
             <div class="lp-modal-wrap">
                 <div class="lp-modal-header">
-                    <h2 class="lp-modal-title" id="modal-leadership-title">Leadership in Complex Systems</h2>
+                    <h2 class="lp-modal-title" id="modal-leadership-title">Liderazgo en sistemas complejos</h2>
                 </div>
                 <div class="lp-modal-body">
-                    <p>For a long time, leadership has been understood as the ability to control variables, anticipate scenarios, and make correct decisions. That approach works when the environment is stable, predictable, and repeatable. It works in complicated systems.</p>
-                    <p>But we do not live in complicated systems.</p>
-                    <p>A complicated system may be difficult, but it is predictable. It has many parts, many rules, and many data points, but if you know the manual, the result is reproducible. An engine, a logistics chain, an algorithm. In these types of systems, Artificial Intelligence is invincible. It processes more information, makes fewer mistakes, and optimizes better than any human being.</p>
-                    <p>A complex system is something else.</p>
-                    <p>In a complex system, variables don't just add up; they interact. They change each other. They affect one another mutually. The behavior of the whole cannot be predicted by analyzing the parts separately. A human team, an organization, a society, or a sports locker room does not react the same way twice to the same situation.</p>
-                    <p>In complex systems, there is no manual.<br>There is context.<br>There is emotion.<br>There is uncertainty.</p>
-                    <p>That is why Artificial Intelligence, although powerful, does not lead complex systems. It can analyze patterns, but it cannot "feel" the system. It does not perceive invisible tensions, emotional climates, shared fears, or internal dynamics that do not appear in the data. And that is where human leadership remains irreplaceable.</p>
-                    <p>A complex system works when "mass intelligence" emerges—when the group begins to think, decide, and adapt better than any individual separately. Not because everyone is brilliant, but because the system is well-organized emotionally and relationally.</p>
-                    <p>Leadership in complex systems does not consist of imposing order, but of creating the conditions for the system to self-organize. It is about achieving a unity that is greater than the sum of its parts—transforming individualities into a living organism capable of adapting, learning, and responding under pressure.</p>
-                    <p>This requires a different type of leadership.<br>You don't lead people like parts.<br>You lead emotions.<br>You lead collective states.<br>You lead situations never faced before.</p>
-                    <p>When the system enters uncertainty, when there are no precedents, when pressure increases and known answers stop working, the leader can no longer lean on past solutions. They have to read the moment, understand the emotional temperature of the group, and decide without guarantees.</p>
-                    <p>This is where many leadership models break down.</p>
-                    <p>My work focuses on accompanying leaders and organizations to understand how complex systems work from the inside—reading invisible dynamics, activating collective intelligence, and sustaining the system when the context changes. Not through control, but through a deep understanding of human behavior in uncertain environments.</p>
-                    <p><strong>Leading a complex system is not about having all the answers.<br>It is knowing how the system responds when nobody has them.</strong></p>
-                    <p class="lp-modal-cta">If you lead people, teams, or organizations and feel that known recipes no longer work, if you face new scenarios for which there is no prior experience, or if you sense the problem is not in the people but in the dynamics of the system, you can contact me.</p>
-                    <p>Because in complex systems, the difference is not made by who is in charge, but by who better understands what is happening.</p>
+                    <p>Durante mucho tiempo, el liderazgo se ha entendido como la capacidad de controlar variables, anticipar escenarios y tomar decisiones correctas. Ese enfoque funciona cuando el entorno es estable, predecible y repetible. Funciona en sistemas complicados.</p>
+                    <p>Pero no vivimos en sistemas complicados.</p>
+                    <p>Un sistema complicado puede ser difícil, pero es predecible. Tiene muchas partes, muchas reglas y muchos datos, pero si conoces el manual, el resultado es reproducible. Un motor, una cadena logística, un algoritmo. En este tipo de sistemas, la Inteligencia Artificial es invencible. Procesa más información, comete menos errores y optimiza mejor que cualquier ser humano.</p>
+                    <p>Un sistema complejo es otra cosa.</p>
+                    <p>En un sistema complejo, las variables no solo se suman: interactúan. Se modifican entre sí. Se afectan mutuamente. El comportamiento del conjunto no puede predecirse analizando las partes por separado. Un equipo humano, una organización, una sociedad o un vestuario deportivo no reaccionan igual dos veces ante la misma situación.</p>
+                    <p>En los sistemas complejos no hay manual.<br>Hay contexto.<br>Hay emoción.<br>Hay incertidumbre.</p>
+                    <p>Por eso la Inteligencia Artificial, aunque poderosa, no lidera sistemas complejos. Puede analizar patrones, pero no puede "sentir" el sistema. No percibe tensiones invisibles, climas emocionales, miedos compartidos ni dinámicas internas que no aparecen en los datos. Y ahí es donde el liderazgo humano sigue siendo irremplazable.</p>
+                    <p>Un sistema complejo funciona cuando emerge la "inteligencia de masa": cuando el grupo empieza a pensar, decidir y adaptarse mejor que cualquier individuo por separado. No porque todos sean brillantes, sino porque el sistema está bien organizado emocional y relacionalmente.</p>
+                    <p>Liderar en sistemas complejos no consiste en imponer orden, sino en crear las condiciones para que el sistema se autoorganice. Se trata de lograr una unidad mayor que la suma de sus partes: transformar individualidades en un organismo vivo capaz de adaptarse, aprender y responder bajo presión.</p>
+                    <p>Esto exige otro tipo de liderazgo.<br>No se lidera a las personas como piezas.<br>Se lideran emociones.<br>Se lideran estados colectivos.<br>Se lideran situaciones nunca antes vividas.</p>
+                    <p>Cuando el sistema entra en incertidumbre, cuando no hay precedentes, cuando la presión aumenta y las respuestas conocidas dejan de funcionar, el líder ya no puede apoyarse en soluciones del pasado. Debe leer el momento, entender la temperatura emocional del grupo y decidir sin garantías.</p>
+                    <p>Aquí es donde muchos modelos de liderazgo se rompen.</p>
+                    <p>Mi trabajo se centra en acompañar a líderes y organizaciones para comprender cómo funcionan los sistemas complejos por dentro: leer dinámicas invisibles, activar inteligencia colectiva y sostener el sistema cuando cambia el contexto. No desde el control, sino desde una comprensión profunda del comportamiento humano en entornos inciertos.</p>
+                    <p><strong>Liderar un sistema complejo no es tener todas las respuestas.<br>Es saber cómo responde el sistema cuando nadie las tiene.</strong></p>
+                    <p class="lp-modal-cta">Si lideras personas, equipos u organizaciones y sientes que las recetas conocidas ya no funcionan, si enfrentas escenarios nuevos para los que no hay experiencia previa, o si percibes que el problema no está en las personas sino en la dinámica del sistema, puedes contactarme.</p>
+                    <p>Porque en los sistemas complejos, la diferencia no la marca quien manda, sino quien mejor entiende lo que está ocurriendo.</p>
                 </div>
-                <button type="button" class="lp-modal-close" aria-label="Close modal" data-close-modal>&times;</button>
+                <button type="button" class="lp-modal-close" aria-label="Cerrar modal" data-close-modal>&times;</button>
             </div>
         </div>
     </div>

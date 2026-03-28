@@ -1,14 +1,14 @@
-/* Utilities */
+/* Utilidades */
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
-/* Current year */
+/* Año actual */
 (function setYear(){
   const el = $('#year');
   if (el) el.textContent = new Date().getFullYear();
 })();
 
-/* Mobile menu */
+/* Menú móvil */
 (function mobileMenu(){
   const burger = $('#burger');
   const mobileMenu = $('#mobileMenu');
@@ -24,7 +24,7 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
   burger.addEventListener('click', toggle);
 })();
 
-/* Smooth scroll with menu closing */
+/* Desplazamiento suave con cierre de menú */
 (function smoothScroll(){
   const links = $$('a[href^="#"]');
   const header = $('.site-header');
@@ -33,7 +33,7 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
   const burger = $('#burger');
   const isSamePage = (a) => a.pathname === location.pathname && a.host === location.host;
   
-  // Close menu function
+  // Función para cerrar el menú
   const closeMenu = () => {
     if (mobileMenu) mobileMenu.classList.remove('open');
     if (siteNav) siteNav.classList.remove('open');
@@ -50,33 +50,33 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
       
       const target = $(href);
       if (!target) {
-        console.log('Target not found for:', href);
+        console.log('No se encontró el destino para:', href);
         return;
       }
       
       e.preventDefault();
       e.stopPropagation();
       
-      // Close menu first
+      // Cerrar primero el menú
       closeMenu();
       
-      // Use requestAnimationFrame for better scroll timing
+      // Usar requestAnimationFrame para mejorar la sincronización del desplazamiento
       requestAnimationFrame(() => {
-        // Calculate header height dynamically
+        // Calcular la altura del encabezado dinámicamente
         const headerHeight = header ? header.offsetHeight : 80;
         const offset = headerHeight + 20;
         
-        // Get current scroll position
+        // Obtener la posición de desplazamiento actual
         const currentScroll = window.pageYOffset || window.scrollY || document.documentElement.scrollTop || 0;
         
-        // Get target position
+        // Obtener la posición de destino
         const targetRect = target.getBoundingClientRect();
         const targetPosition = targetRect.top + currentScroll;
         const scrollPosition = Math.max(0, targetPosition - offset);
         
-        console.log('Scrolling to:', href, 'Target position:', targetPosition, 'Scroll position:', scrollPosition, 'Current:', currentScroll);
+        console.log('Desplazando a:', href, 'Posición destino:', targetPosition, 'Posición scroll:', scrollPosition, 'Actual:', currentScroll);
         
-        // Method 1: Try scrollIntoView with block start
+        // Método 1: probar scrollIntoView con bloque al inicio
         try {
           target.scrollIntoView({ 
             behavior: 'smooth', 
@@ -84,15 +84,15 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
             inline: 'nearest'
           });
           
-          // Adjust for header offset after scroll starts
+          // Ajustar el offset del encabezado después de iniciar el desplazamiento
           setTimeout(() => {
             const adjustment = offset;
             window.scrollBy(0, -adjustment);
           }, 100);
         } catch (e) {
-          console.log('scrollIntoView failed, trying scrollTo:', e);
+          console.log('scrollIntoView falló, probando scrollTo:', e);
           
-          // Method 2: Direct scrollTo
+          // Método 2: scrollTo directo
           window.scrollTo({ 
             top: scrollPosition, 
             left: 0,
@@ -105,7 +105,7 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 })();
 
 
-/* About Me Modal */
+/* Modal Sobre mí */
 (function aboutModal(){
   const modal = $('#aboutModal');
   const btn = $('#aboutMeBtn');
@@ -113,31 +113,31 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
   
   if (!modal || !btn) return;
   
-  // Close modal function
+  // Función para cerrar el modal
   const closeModal = () => {
     modal.classList.remove('open');
-    document.body.style.overflow = ''; // Restore scrolling
+    document.body.style.overflow = ''; // Restaurar desplazamiento
   };
   
-  // Open modal
+  // Abrir modal
   btn.addEventListener('click', () => {
     modal.classList.add('open');
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    document.body.style.overflow = 'hidden'; // Evitar desplazamiento del fondo
   });
   
-  // Close modal with close button
+  // Cerrar modal con el botón de cierre
   if (closeBtn) {
     closeBtn.addEventListener('click', closeModal);
   }
   
-  // Close modal when clicking outside
+  // Cerrar modal al hacer clic fuera
   modal.addEventListener('click', (e) => {
     if (e.target === modal) {
       closeModal();
     }
   });
   
-  // Close modal with Escape key
+  // Cerrar modal con la tecla Escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modal && modal.classList.contains('open')) {
       closeModal();
@@ -145,37 +145,37 @@ const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
   });
 })();
 
-/* Download File Function */
+/* Función de descarga de archivos */
 async function downloadFile(filePath, fileName) {
   try {
-    // Fetch the file as a Blob
+    // Obtener el archivo como Blob
     const response = await fetch(filePath);
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`Error HTTP: estado ${response.status}`);
     }
     const blob = await response.blob();
     
-    // Create a Blob URL from the file
+    // Crear una URL de Blob desde el archivo
     const url = window.URL.createObjectURL(blob);
     
-    // Create a temporary link element
+    // Crear un enlace temporal
     const link = document.createElement('a');
     link.href = url;
-    link.download = fileName; // Force download with filename
+    link.download = fileName; // Forzar la descarga con nombre de archivo
     link.style.display = 'none';
     
-    // Append to body, click, then remove
+    // Añadir al body, hacer clic y eliminar
     document.body.appendChild(link);
     link.click();
     
-    // Clean up: remove link and revoke Blob URL
+    // Limpiar: quitar enlace y revocar URL del Blob
     setTimeout(() => {
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     }, 100);
   } catch (error) {
-    console.error('Download failed:', error);
-    // Fallback: try direct download if fetch fails
+    console.error('La descarga falló:', error);
+    // Alternativa: intentar descarga directa si falla fetch
     const link = document.createElement('a');
     link.href = filePath;
     link.download = fileName;
@@ -186,23 +186,23 @@ async function downloadFile(filePath, fileName) {
   }
 }
 
-/* Scroll-down button to bottom of page */
+/* Botón de bajar al final de la página */
 (function scrollDown(){
   const btn = document.getElementById('scrollDown');
   if (!btn) {
-    console.log('Scroll down button not found');
+    console.log('No se encontró el botón de bajar');
     return;
   }
   btn.addEventListener('click', function(e) {
     e.preventDefault();
     e.stopPropagation();
-    console.log('Scroll button clicked');
+    console.log('Botón de desplazamiento pulsado');
     
-    // Try multiple methods to ensure scrolling works
+    // Probar varios métodos para asegurar que el desplazamiento funcione
     const body = document.body;
     const html = document.documentElement;
     
-    // Get the actual scrollable height
+    // Obtener la altura real desplazable
     const scrollHeight = Math.max(
       body.scrollHeight,
       body.offsetHeight,
@@ -211,23 +211,23 @@ async function downloadFile(filePath, fileName) {
       html.offsetHeight
     );
     
-    console.log('Body scrollHeight:', body.scrollHeight);
-    console.log('Document scrollHeight:', html.scrollHeight);
-    console.log('Window innerHeight:', window.innerHeight);
-    console.log('Calculated scroll position:', scrollHeight);
+    console.log('scrollHeight del body:', body.scrollHeight);
+    console.log('scrollHeight del documento:', html.scrollHeight);
+    console.log('innerHeight de ventana:', window.innerHeight);
+    console.log('Posición de desplazamiento calculada:', scrollHeight);
     
-    // Scroll to bottom - use the maximum scroll position
+    // Ir al final: usar la posición máxima de desplazamiento
     const maxScroll = scrollHeight - window.innerHeight;
-    console.log('Max scroll position:', maxScroll);
+    console.log('Posición máxima de desplazamiento:', maxScroll);
     
-    // Try scrolling
+    // Intentar desplazamiento
     window.scrollTo({
       top: scrollHeight,
       left: 0,
       behavior: 'smooth'
     });
     
-    // Fallback: try scrolling the body directly
+    // Alternativa: intentar desplazamiento directo del body
     setTimeout(() => {
       if (window.pageYOffset < scrollHeight - 100) {
         body.scrollTop = scrollHeight;
