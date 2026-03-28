@@ -236,6 +236,8 @@
         .lp-insta-line {
             display: flex; align-items: center; justify-content: flex-end; gap: 6px;
             font-size: clamp(10px, 2.5vw, 16px); font-weight: 700;
+            color: inherit;
+            text-decoration: none;
         }
 
         .lp-overlay-bottom {
@@ -397,12 +399,20 @@
            OPTIMIZACIONES MÓVIL
            ========================================= */
         @media (max-width: 768px) {
-            .lp-titles-overlay { margin-top: -140px; }
-            .lp-hr { margin-bottom: 12px; }
+            .lp-body {
+                min-height: 100svh;
+                overflow-y: hidden;
+            }
+            .lp-titles-overlay {
+                margin-top: -155px;
+                padding: 0 16px;
+            }
+            .lp-title-sub { margin: 6px 0; }
+            .lp-hr { margin: 6px auto 4px auto; }
             .lp-combined-wrapper {
                 aspect-ratio: 3 / 4;
-                max-height: 82vh;
-                margin-top: -24px;
+                max-height: 56vh;
+                margin-top: -14px;
             }
             /* Móvil: usar --lp-photo-width-mobile y --lp-photo-pos-y-mobile desde :root, sin borde */
             .lp-combined-photo-wrap {
@@ -413,32 +423,46 @@
                 object-fit: contain;
                 object-position: left var(--lp-photo-pos-y-mobile);
             }
+            .lp-portrait {
+                max-height: 46vh;
+                margin-bottom: 0;
+            }
             /* Bloque de cita más abajo para quedar al mismo nivel que la imagen (cara/pecho) */
             .lp-overlay-top {
-                flex: 1;
+                flex: 0 0 auto;
                 min-height: 0;
-                padding-top: 40%;
-                padding-bottom: 4%;
+                padding-top: 32%;
+                padding-bottom: 2%;
                 align-items: center;
+                flex-direction: column;
             }
             .lp-overlay-left-spacer {
-                flex: 0 0 var(--lp-photo-width-mobile);
+                display: none;
             }
             .lp-overlay-right-text {
+                width: 100%;
                 text-align: center;
+                align-items: center;
                 justify-content: center;
+                gap: 6px;
+            }
+            .lp-main-quote {
+                font-size: clamp(18px, 6.5vw, 30px);
+            }
+            .lp-follow-text {
+                font-size: clamp(14px, 4.5vw, 20px);
             }
             .lp-insta-line {
                 justify-content: center;
+                font-size: clamp(12px, 4vw, 18px);
             }
             .lp-overlay-bottom {
-                padding-bottom: 48px;
+                padding-bottom: 34px;
             }
             .lp-icon-grid {
-                gap: 12px;
-                max-width: 95%;
+                gap: 10px;
+                max-width: 92%;
             }
-            .lp-portrait { max-height: 55vh; }
         }
 
         /* --- VENTANAS MODALES --- */
@@ -599,10 +623,10 @@
                 <div class="lp-overlay-right-text">
                     <p class="lp-main-quote">“LO MEJOR DE MÍ ES QUE PUEDO SACAR LO MEJOR DE TI “</p>
                     <p class="lp-follow-text">SÍGUEME Y COMPRUÉBALO</p>
-                    <div class="lp-insta-line">
+                    <a class="lp-insta-line" href="https://www.instagram.com/carlos.olid/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de Carlos Olid">
                         <i class="fa-brands fa-instagram" style="color:#E1306C"></i>
                         <span>@carlos.olid</span>
-                    </div>
+                    </a>
                 </div>
             </div>
 
